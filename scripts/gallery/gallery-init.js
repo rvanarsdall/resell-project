@@ -16,7 +16,7 @@
   };
 
   // if it is local host load the local css
-  if (window.location.hostname === "localhost") {
+  if (window.location.hostname === "127.0.0.1") {
     loadCSS("./styles/gallery-styles.css");
   } else {
     loadCSS(`${HOST_URL}/styles/gallery-styles.css`);
@@ -32,7 +32,8 @@
   );
 
   // Load the scripts in order if it is local host:
-  if (window.location.hostname === "localhost") {
+  console.log("window.location.hostname: ", window.location.hostname);
+  if (window.location.hostname === "127.0.0.1") {
     loadScript("./scripts/gallery/getSheetData.js", () => {
       loadScript("./scripts/gallery/script.js");
     });

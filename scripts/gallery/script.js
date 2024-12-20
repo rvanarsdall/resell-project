@@ -1,6 +1,6 @@
 console.log("It works");
 let currentPage = 1;
-const itemsPerPage = 9; // Change this value to adjust items per page
+const itemsPerPage = 3; // Change this value to adjust items per page
 const formName = "Website";
 
 const galleryInsert = ` <div class="container">
@@ -46,7 +46,6 @@ galleryLayout.innerHTML = galleryInsert;
 function buildAndLoad() {
   console.log("DOM fully loaded and parsed");
   const sheetDataHandler = (sheetData) => {
-    console.log("sheet data: ", sheetData);
 
     //ADD YOUR CODE TO WORK WITH sheetData ARRAY OF OBJECTS HERE
     if (!sheetData) return console.log("No data found");
@@ -139,10 +138,8 @@ function buildGalleryList(data) {
   let inventoryHTMLList = [];
 
   let inventory = data;
-  console.log("inventory: ", inventory);
 
   inventory.forEach((product, index) => {
-    console.log("product: ", product);
     let currentInventoryHTML = productInformation;
     currentInventoryHTML = replaceProductInformation(
       currentInventoryHTML,
@@ -184,7 +181,6 @@ function renderGallery() {
   const end = start + itemsPerPage;
   const paginatedItems = items.slice(start, end);
   const combinedHTML = paginatedItems.join("");
-  console.log(combinedHTML);
 
   gallery.innerHTML = combinedHTML;
   updatePageControls();
