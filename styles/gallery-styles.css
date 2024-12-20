@@ -9,7 +9,7 @@
 
 .gallery {
   display: grid;
-  max-width: 900px;
+  max-width: 1000px;
   grid-template-columns: 1fr;
   font-family: "Manrope", sans-serif !important;
   gap: 45px;
@@ -17,10 +17,8 @@
 
 .col-4 {
   /* column-span: 3; */
-  min-width: 250px;
-  padding: 10px;
-  margin: 10px;
-  align-self: stretch;
+  min-width: 300px;
+
 }
 
 /* Contain Image to be  250 by 250 */
