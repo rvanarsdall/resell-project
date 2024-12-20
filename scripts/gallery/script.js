@@ -1,6 +1,6 @@
 console.log("It works");
 let currentPage = 1;
-const itemsPerPage = 3; // Change this value to adjust items per page
+const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
 const formName = "Website";
 
 const galleryInsert = ` <div class="container">
