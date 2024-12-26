@@ -29,7 +29,7 @@ let productInformation = `<div class="col-4">
         />
         <div class="title-price flex">
           <h3 class="title">{{TITLE}}</h3>
-          <p class="price">$100</p>
+          <p class="price">{{PRICE}}</p>
         </div>
         <div class="quick-description">
           {{DESCRIPTION}}
@@ -136,6 +136,12 @@ function buildGalleryList(data) {
       currentInventoryHTML,
       "DESCRIPTION",
       product[productDescription]
+    );
+
+    currentInventoryHTML = replaceProductInformation(
+      currentInventoryHTML,
+      "PRICE",
+      product["price"]
     );
 
     currentInventoryHTML = replaceProductInformation(
