@@ -1,4 +1,5 @@
 console.log("It works");
+const PRODUCT_URL = "https://https://www.resellwithmichelle.org/en/products/";
 let currentPage = 1;
 const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
 const formName = "Website";
@@ -35,7 +36,7 @@ let productInformation = `<div class="col-4">
         </div>
         <hr>
         <div class="learn-more">
-       <a href="https://www.google.com" class="learn-more-link learn-more">Learn More  <span class="chevron"> > </></a>
+       <a href="{{LINK}}" class="learn-more-link learn-more">Learn More  <span class="chevron"> > </></a>
        
         </div>
       </div>`;
@@ -46,7 +47,6 @@ galleryLayout.innerHTML = galleryInsert;
 function buildAndLoad() {
   console.log("DOM fully loaded and parsed");
   const sheetDataHandler = (sheetData) => {
-
     //ADD YOUR CODE TO WORK WITH sheetData ARRAY OF OBJECTS HERE
     if (!sheetData) return console.log("No data found");
 
@@ -108,6 +108,7 @@ function cleanSheetData(sheetData) {
         price: formatNumberToCurrency(item["Price"]),
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
+        link: `${PRODUCT_URL}?id=${item["SKU"]}`,
       };
     })
     .reverse();
@@ -169,6 +170,13 @@ function buildGalleryList(data) {
       "CURRENT_STATUS",
       product[productCurrentStatus]
     );
+
+    currentInventoryHTML = replaceProductInformation(
+      currentInventoryHTML,
+      "LINK",
+      product["link"]
+    );
+
     inventoryHTMLList.push(currentInventoryHTML);
   });
 
