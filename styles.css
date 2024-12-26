@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.grid-layout {
+  display: grid;
+  max-width: 1000px;
+  grid-template-columns: 1fr;
+  font-family: "Manrope", sans-serif !important;
+  gap: 45px;
+}
+
+.title {
+  font-family: "Manrope", sans-serif;
+  font-size: 28px;
+  font-style: initial;
+  font-variation-settings: "weight" 400, "width" 100, "SOFT" 0;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.4;
+  text-decoration: none #000 solid;
+  text-transform: initial;
+}
+
+.product-container {
+  width: 90%;
+}
+
+.product-container > .product-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* outline: 3px solid red; */
+}
+.product-container > .product-image img {
+  /* outline: 3px solid green; */
+  width: 89%;
+  height: auto;
+  /* object-fit: cover; */
+}
+
+.product-container > .product-image img:nth-child(2) {
+  width: 49%; /* Slightly smaller size for visual hierarchy */
+  z-index: 2; /* Ensures it appears above the first image */
+  /* outline: 3px solid blue; Optional: Different outline for clarity */
+  align-self: flex-end; /* Aligns the image to the bottom */
+  margin-top: -33%;
+}
+
+.product-container > .product-image img:nth-child(1) {
+  position: relative; /* Keeps the first image as the base layer */
+  z-index: 1; /* Ensures it's below the second image */
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+ 
+  padding: 0 100px;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 400;
+  
+  color:black;
+  align-self: flex-end;
+}
+
+.item-tag {
+  font-size: 16 px;
+  font-weight: 700;
+  color: rgb(16, 22, 124);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.underline-container {
+  position: relative;
+  margin: 10px 0 20px;
+}
+
+.underline {
+  position: absolute;
+  left: 0;
+  width: 15%;
+  height: 3px;
+  background-color: rgb(16, 22, 124);
+}
+.border-top {
+  border-top: 1px solid rgb(16, 22, 124, 0.5);
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgb(16, 22, 124, 0.5);
+}
+
+.mt-3 {
+  margin-top: 5px;
+}
+
+.mb-3 {
+  margin-bottom: 5px;
+}
+
+.pb-3 {
+  padding-bottom: 5px;
+}
+
+.pt-3 {
+  padding-top: 5px;
+}
+
+.icon-tag{
+  width: 16px;
+  color: rgb(16, 22, 124);
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-self-end {
+  margin-top:auto;
+}
+
+.justify-self-end {
+  justify-self: flex-end;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+.text-primary {
+  color: rgb(16, 22, 124);
+}
+.contact-us-link {
+  color: #000;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.contact-us {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.5;
+  letter-spacing: -0.3;
+  font-size: 16px;
+}
+
+.contact-us-link:hover {
+  color: #10167c;
+}
+
+.chevron {
+  font-size: 1.5rem;
+}
+
+/* media screen */
+@media screen and (min-width: 768px) {
+  .grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .title {
+    font-family: "Manrope", sans-serif;
+    font-size: 35px;
+    font-style: initial;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.4;
+    text-decoration: none #000 solid;
+    text-transform: initial;
+  }
+
+  .description-container {
+    font-family: "Manrope", sans-serif;
+    font-weight: 200;
+    padding: 0;
+  }
+
+  .deliver-method {
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.8;
+    letter-spacing: -0.3;
+    font-size: 14px;
+  }
+
+}
