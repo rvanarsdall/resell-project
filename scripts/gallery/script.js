@@ -29,12 +29,14 @@ let productInformation = `<div class="col-4">
         <div class="quick-description">
           {{DESCRIPTION}}
         </div>
-        <hr>
+     
+         <div class="border-top border-bottom align-self-end">
         <div class="deliver-method flex">
           <div id="method">{{DELIVERY_METHOD}}</div>
           <div id="status">{{CURRENT_STATUS}}</div>
         </div>
-        <hr>
+        </div>
+
         <div class="learn-more">
        <a href="{{LINK}}" class="learn-more-link learn-more">Learn More  <span class="chevron"> > </></a>
        
