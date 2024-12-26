@@ -111,7 +111,7 @@ function buildAndLoad() {
       renderNoProductFound();
       return console.log("No data found");
     }
-    data = cleanSheetData(sheetData);
+    data = individualCleanSheetData(sheetData);
     productData = data.find((item) => item.id == productID);
 
     if (!productData) {
@@ -203,7 +203,7 @@ function renderProduct(product) {
 
 buildAndLoad();
 
-function cleanSheetData(sheetData) {
+function individualCleanSheetData(sheetData) {
   let cleanData = sheetData
     .filter((item) => item["Item Name"] !== "")
     .map((item) => {

@@ -62,6 +62,7 @@ function buildAndLoad() {
     if (!sheetData) return console.log("No data found");
 
     data = cleanSheetData(sheetData);
+    debugger
     items = buildGalleryList(data);
     renderGallery();
   };
