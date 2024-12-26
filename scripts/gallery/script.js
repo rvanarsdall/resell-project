@@ -5,7 +5,6 @@ const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this valu
 const showNavigationButtons =
   window.galleryConfig.showNavigationButtons || false;
 
-
 const galleryInsertWithNavigation = ` <div class="container">
       <div class="gallery"></div>
       <div class="pagination">
@@ -62,7 +61,6 @@ function buildAndLoad() {
     if (!sheetData) return console.log("No data found");
 
     data = cleanSheetData(sheetData);
-    debugger
     items = buildGalleryList(data);
     renderGallery();
   };
