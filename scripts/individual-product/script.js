@@ -203,8 +203,6 @@ function renderProduct(product) {
 
 buildAndLoad();
 
-let items = [];
-
 function cleanSheetData(sheetData) {
   let cleanData = sheetData
     .filter((item) => item["Item Name"] !== "")
