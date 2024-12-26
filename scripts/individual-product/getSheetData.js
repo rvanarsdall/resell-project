@@ -1,4 +1,4 @@
-const getSheetData = ({ sheetID, sheetName, query, callback }) => {
+const individualGetSheetData = ({ sheetID, sheetName, query, callback }) => {
   console.log("getSheetData.js");
   
   const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?`;

@@ -121,7 +121,7 @@ function buildAndLoad() {
     renderProduct(productData);
     popOverEffect();
   };
-  getSheetData({
+  individualGetSheetData({
     // sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
     sheetID: "1CZVsEbmZ3FaIMWkmp5H_RI7ynuN61FoGp9fSdiYyypo",
     // sheetName is the name of the TAB in your spreadsheet (default is "Sheet1")
