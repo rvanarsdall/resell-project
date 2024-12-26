@@ -4,7 +4,7 @@ let currentPage = 1;
 const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
 const showNavigationButtons =
   window.galleryConfig.showNavigationButtons || false;
-const formName = "Website";
+
 
 const galleryInsertWithNavigation = ` <div class="container">
       <div class="gallery"></div>
@@ -55,6 +55,7 @@ galleryLayout.innerHTML = showNavigationButtons
   : galleryInsertWithoutNavigation;
 
 function buildAndLoad() {
+  const formName = "Website";
   console.log("DOM fully loaded and parsed");
   const sheetDataHandler = (sheetData) => {
     //ADD YOUR CODE TO WORK WITH sheetData ARRAY OF OBJECTS HERE
