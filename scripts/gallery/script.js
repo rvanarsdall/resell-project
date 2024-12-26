@@ -176,7 +176,9 @@ function renderGallery() {
   const combinedHTML = paginatedItems.join("");
 
   gallery.innerHTML = combinedHTML;
-  updatePageControls();
+  if (showNavigationButtons) {
+    updatePageControls();
+  }
 }
 
 function updatePageControls() {
