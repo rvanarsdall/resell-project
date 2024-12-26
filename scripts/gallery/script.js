@@ -2,9 +2,11 @@ console.log("It works");
 const PRODUCT_URL = "https://www.resellwithmichelle.org/en/product";
 let currentPage = 1;
 const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
+const showNavigationButtons =
+  window.galleryConfig.showNavigationButtons || false;
 const formName = "Website";
 
-const galleryInsert = ` <div class="container">
+const galleryInsertWithNavigation = ` <div class="container">
       <div class="gallery"></div>
       <div class="pagination">
         <button class='gallery-btn' id="prevPage">Previous</button>
@@ -16,6 +18,10 @@ const galleryInsert = ` <div class="container">
         <button class='gallery-btn' id="nextPage">Next</button>
       </div>
     </div>`;
+
+const galleryInsertWithoutNavigation = ` <div class="container">
+      <div class="gallery"></div>
+      `;
 
 let productInformation = `<div class="col-4">
         <img
@@ -44,7 +50,9 @@ let productInformation = `<div class="col-4">
       </div>`;
 // Gallery Layout Insert
 const galleryLayout = document.querySelector(".gallery-layout");
-galleryLayout.innerHTML = galleryInsert;
+galleryLayout.innerHTML = showNavigationButtons
+  ? galleryInsertWithNavigation
+  : galleryInsertWithoutNavigation;
 
 function buildAndLoad() {
   console.log("DOM fully loaded and parsed");
