@@ -259,6 +259,6 @@ function translateDeliveryMethod(deliveryMethod) {
   if (deliveryMethod.length === 1) {
     return deliveryMethod[0] + " Only";
   } else {
-    return deliveryMethod[0] + " and " + deliveryMethod[1];
+    return deliveryMethod[0] + " or " + deliveryMethod[1];
   }
 }
