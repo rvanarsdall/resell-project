@@ -151,14 +151,14 @@
 .text-primary {
   color: rgb(16, 22, 124);
 }
-.contact-us-link {
+.contact-us-link, .gallery-link {
   color: #000;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
 }
 
-.contact-us {
+.contact-us, .gallery {
   display: flex;
   justify-content: start;
   align-items: center;
