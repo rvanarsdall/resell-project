@@ -40,19 +40,22 @@
 }
 .product-container > .product-image img {
   /* outline: 3px solid green; */
-  width: 89%;
-  height: 500px;
-  object-fit: cover; /* Ensures the image fills the area while maintaining aspect ratio */
+  width: 300px;
+  height: 300px;
+  object-fit:cover; /* Ensures the image fills the area while maintaining aspect ratio */
   object-position: center;
+  border-radius: 10px;
 }
 
 .product-container > .product-image img:nth-child(2) {
-  width: 65%; /* Slightly smaller size for visual hierarchy */
+  width:200px; /* Slightly smaller size for visual hierarchy */
   z-index: 2; /* Ensures it appears above the first image */
   /* outline: 3px solid blue; Optional: Different outline for clarity */
   align-self: flex-end; /* Aligns the image to the bottom */
   margin-top: -33%;
-  height: 300px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .product-container > .product-image img:nth-child(1) {
