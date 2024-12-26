@@ -76,32 +76,7 @@ function buildAndLoad() {
 
 buildAndLoad();
 
-// // Getting the Sheet Data
-// window.addEventListener("DOMContentLoaded", (event) => {
-//   console.log("DOM fully loaded and parsed");
-//   const sheetDataHandler = (sheetData) => {
-//     console.log("sheet data: ", sheetData);
-
-//     //ADD YOUR CODE TO WORK WITH sheetData ARRAY OF OBJECTS HERE
-//     if (!sheetData) return console.log("No data found");
-
-//     data = cleanSheetData(sheetData);
-//     items = buildGalleryList(data);
-//     renderGallery();
-//   };
-//   getSheetData({
-//     // sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
-//     sheetID: "1CZVsEbmZ3FaIMWkmp5H_RI7ynuN61FoGp9fSdiYyypo",
-//     // sheetName is the name of the TAB in your spreadsheet (default is "Sheet1")
-//     sheetName: formName,
-//     query: "SELECT *",
-//     callback: sheetDataHandler,
-//   });
-// });
-
-// let items = buildGalleryList();
 let items = [];
-// renderGallery();
 
 function cleanSheetData(sheetData) {
   let cleanData = sheetData
@@ -172,7 +147,8 @@ function buildGalleryList(data) {
     currentInventoryHTML = replaceProductInformation(
       currentInventoryHTML,
       "DELIVERY_METHOD",
-      product[productDeliveryMethod]
+      translateDeliveryMethod(product[productDeliveryMethod])
+      
     );
 
     currentInventoryHTML = replaceProductInformation(
@@ -268,4 +244,13 @@ function formatNumberToCurrency(number) {
     style: "currency",
     currency: "USD",
   });
+}
+
+function translateDeliveryMethod(deliveryMethod){
+  deliveryMethod = deliveryMethod.split(",");
+  if(deliveryMethod.length === 1){
+    return deliveryMethod[0] + " Only";
+  } else {
+    return deliveryMethod[0] + " and " + deliveryMethod[1];
+  }
 }
