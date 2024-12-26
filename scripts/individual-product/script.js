@@ -1,6 +1,6 @@
 console.log("individual-product/script.js");
 
-const productInformation = ` <div class="container">
+const individualProductInformation = ` <div class="container">
       <div class="grid-layout">
         <div class="product-container">
           <div class="product-image">
@@ -156,7 +156,7 @@ function renderNoProductFound() {
 
 function renderProduct(product) {
   if (!product) return console.log("No product found");
-  let currentProductHTML = productInformation;
+  let currentProductHTML = individualProductInformation;
   currentProductHTML = replaceProductInformation(
     currentProductHTML,
     "TITLE",
