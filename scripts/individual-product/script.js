@@ -19,7 +19,7 @@ const individualProductInformation = ` <div class="container">
 
           <div class="flex space-between">
             <div class="title">{{TITLE}}</div>
-            <div class="price">{{PRICE}}</div>
+            <div class="individual-price">{{PRICE}}</div>
           </div>
 
           <div class="underline-container">
@@ -60,7 +60,7 @@ const productNotFound = ` <div class="container">
 
           <div class="flex space-between">
             <div class="title">Product Not Found</div>
-            <div class="price">OOPS!</div>
+            <div class="individual-price">OOPS!</div>
           </div>
 
           <div class="underline-container">
