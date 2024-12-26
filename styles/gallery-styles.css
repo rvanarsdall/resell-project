@@ -144,7 +144,7 @@
 /* Cut text off if it is more than 90 characters */
 .quick-description {
   display: -webkit-box;
-  line-clamp: 3;
+  line-clamp: 2;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
