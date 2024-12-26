@@ -90,7 +90,7 @@ const productNotFound = ` <div class="container">
     </div>`;
 
 //Path Variables from the URL
-const LINK_TO_GALLERY = "https://www.resellwithmichelle.org/en/products/";
+const LINK_TO_GALLERY = "https://www.resellwithmichelle.org/en/marketplace";
 const urlParams = new URLSearchParams(window.location.search);
 const productID = urlParams.get("id") || undefined;
 let productData = {};
