@@ -1,5 +1,5 @@
 console.log("It works");
-const PRODUCT_URL = "https://www.resellwithmichelle.org/en/product/";
+const PRODUCT_URL = "https://www.resellwithmichelle.org/en/product";
 let currentPage = 1;
 const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
 const formName = "Website";
