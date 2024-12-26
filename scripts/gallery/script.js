@@ -148,7 +148,6 @@ function buildGalleryList(data) {
       currentInventoryHTML,
       "DELIVERY_METHOD",
       translateDeliveryMethod(product[productDeliveryMethod])
-      
     );
 
     currentInventoryHTML = replaceProductInformation(
@@ -203,26 +202,27 @@ function updatePageControls() {
 }
 
 // Event Listeners
-document.getElementById("prevPage").addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
+if (showNavigationButtons) {
+  document.getElementById("prevPage").addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderGallery();
+    }
+  });
+
+  document.getElementById("nextPage").addEventListener("click", () => {
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderGallery();
+    }
+  });
+
+  document.getElementById("pageSelect").addEventListener("change", (e) => {
+    currentPage = parseInt(e.target.value, 10);
     renderGallery();
-  }
-});
-
-document.getElementById("nextPage").addEventListener("click", () => {
-  const totalPages = Math.ceil(items.length / itemsPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
-    renderGallery();
-  }
-});
-
-document.getElementById("pageSelect").addEventListener("change", (e) => {
-  currentPage = parseInt(e.target.value, 10);
-  renderGallery();
-});
-
+  });
+}
 // --==== QUERY EXAMPLES ====--
 // --==== USE LETTERS FOR COLUMN NAMES ====--
 //  'SELECT A,C,D WHERE D > 150'
@@ -246,9 +246,9 @@ function formatNumberToCurrency(number) {
   });
 }
 
-function translateDeliveryMethod(deliveryMethod){
+function translateDeliveryMethod(deliveryMethod) {
   deliveryMethod = deliveryMethod.split(",");
-  if(deliveryMethod.length === 1){
+  if (deliveryMethod.length === 1) {
     return deliveryMethod[0] + " Only";
   } else {
     return deliveryMethod[0] + " and " + deliveryMethod[1];
