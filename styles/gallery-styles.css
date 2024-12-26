@@ -149,10 +149,11 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 45px;
+  min-height: 40px;
   /* font thin light */
   font-weight: 200;
   font-size: 14px;
+  margin-bottom: 10px
   /* line-height: 1.8; */
   /* letter-spacing: -0.3; */
 }
