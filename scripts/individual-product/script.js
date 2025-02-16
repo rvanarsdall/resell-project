@@ -154,6 +154,20 @@ function renderNoProductFound() {
 
 function renderProductIndividual(product) {
   if (!product) return console.log("No product found");
+
+  // Set Page Title
+  document.title = `${product.title} | Resell with Michelle`;
+
+  // Update Meta Tags
+  updateMetaTag("description", product.description.replace(/<\/?p>/g, "").slice(0, 150));
+  updateMetaTag("og:title", product.title);
+  updateMetaTag(
+    "og:description",
+    product.description.replace(/<\/?p>/g, "").slice(0, 150)
+  );
+  updateMetaTag("og:image", product.photo[0]);
+  updateMetaTag("og:url", window.location.href);
+
   let currentProductHTML = individualProductInformation;
   currentProductHTML = replaceProductInformation(
     currentProductHTML,
@@ -314,6 +328,32 @@ function popOverEffect() {
     });
   });
 }
+
+
+function updateMetaTag(nameOrProperty, content) {
+  let metaTag;
+
+  if (nameOrProperty.startsWith("og:")) {
+    // Open Graph meta tag (property)
+    metaTag = document.querySelector(`meta[property="${nameOrProperty}"]`);
+    if (!metaTag) {
+      metaTag = document.createElement("meta");
+      metaTag.setAttribute("property", nameOrProperty);
+      document.head.appendChild(metaTag);
+    }
+  } else {
+    // Standard meta tag (name)
+    metaTag = document.querySelector(`meta[name="${nameOrProperty}"]`);
+    if (!metaTag) {
+      metaTag = document.createElement("meta");
+      metaTag.setAttribute("name", nameOrProperty);
+      document.head.appendChild(metaTag);
+    }
+  }
+
+  metaTag.setAttribute("content", content);
+}
+
 
 function addingPlusSignsToSpaces(input) {
   return input ? input.toString().replace(/ /g, "+") : "blank";
