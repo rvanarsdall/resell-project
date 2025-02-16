@@ -3,6 +3,7 @@ console.log("It works");
 // ** Global Variables **
 let searchQuery = "";
 let data = [];
+let filteredData = [];
 let searchTimeout;
 
 // ** Page Configuration **
@@ -84,9 +85,7 @@ function buildAndLoad() {
 
     data = cleanSheetData(sheetData);
 
-    const filteredData = searchQuery
-      ? data.filter((item) => item.title.toLowerCase().includes(searchQuery))
-      : data;
+    filteredData = data;
 
     items = buildGalleryList(filteredData);
     renderGallery(items);
@@ -136,7 +135,7 @@ function replaceProductInformation(
   replacementName,
   replacementData
 ) {
-  return currentProductInformation.replace(
+  return currentProductInformation.replaceAll(
     `{{${replacementName}}}`,
     replacementData
   );
@@ -214,7 +213,7 @@ function renderGallery(items) {
 
   gallery.innerHTML = combinedHTML;
   if (showNavigationButtons) {
-    updatePageControls();
+    updatePageControls(items);
   }
 
   if (showSearchBar) {
@@ -234,11 +233,12 @@ function filterAndLoad() {
   const filteredData = searchQuery
     ? data.filter((item) => item.title.toLowerCase().includes(searchQuery))
     : data;
+  currentPage = 1;
   let items = buildGalleryList(filteredData);
   renderGallery(items);
 }
 
-function updatePageControls() {
+function updatePageControls(items) {
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const pageInfo = document.getElementById("pageInfo");
   const pageSelect = document.getElementById("pageSelect");
