@@ -1,58 +1,80 @@
 console.log("It works");
+
+// ** Global Variables **
+let searchQuery = "";
+let data = [];
+let searchTimeout;
+
+// ** Page Configuration **
+
 const PRODUCT_URL = "https://www.resellwithmichelle.org/en/product";
+const IMAGE1_NOT_FOUND =
+  "https://api.opnform.com/open/forms/11888/submissions/file/3_a838a25f-554f-4f2b-9c5e-452b3c0e5df5.png?signature=8f6c82ca05cf2fef1aa43fb284855b7b1a36caf7f88ac237d9e1fa4e86c477df";
+
+const IMAGE2_NOT_FOUND =
+  "https://api.opnform.com/open/forms/11888/submissions/file/2_d7d9b90c-97ad-4077-b205-759f0d3f9522.png?signature=a0a2af9c79c42defa7f09ba5fa8887f375ade70995e88988c38d825ddd50ac41";
 let currentPage = 1;
 const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this value to adjust items per page
 const showNavigationButtons =
   window.galleryConfig.showNavigationButtons || false;
+const showSearchBar = window.galleryConfig.showSearchBar || false;
 
-const galleryInsertWithNavigation = ` <div class="container">
-      <div class="gallery"></div>
-      <div class="pagination">
-        <button class='gallery-btn' id="prevPage">Previous</button>
-        <div style="display: flex; flex-direction: column">
-          <span id="pageInfo"></span>
-          <select id="pageSelect"></select>
-        </div>
-
-        <button class='gallery-btn' id="nextPage">Next</button>
-      </div>
-    </div>`;
-
-const galleryInsertWithoutNavigation = ` <div class="container">
-      <div class="gallery"></div>
-      `;
-
-let productInformation = `<div class="col-4">
-        <img
-          src="{{PHOTO_URL}}"
-          alt=""
-        />
-        <div class="title-price flex">
-          <h3 class="title">{{TITLE}}</h3>
-          <p class="price">{{PRICE}}</p>
-        </div>
-        <div class="quick-description">
-          {{DESCRIPTION}}
-        </div>
-     
-         <div class="border-top border-bottom align-self-end">
-        <div class="deliver-method flex">
-          <div id="method">{{DELIVERY_METHOD}}</div>
-          <div id="status">{{CURRENT_STATUS}}</div>
-        </div>
-        </div>
-
-        <div class="learn-more">
-       <a href="{{LINK}}" class="learn-more-link learn-more">Learn More  <span class="chevron"> > </></a>
-       
-        </div>
-      </div>`;
-// Gallery Layout Insert
+// ** DOM Elements **
 const galleryLayout = document.querySelector(".gallery-layout");
-galleryLayout.innerHTML = showNavigationButtons
-  ? galleryInsertWithNavigation
-  : galleryInsertWithoutNavigation;
 
+// ** Page Dynamic HTML **
+const galleryInsertWithNavigation = /*html*/ ` 
+  
+  <div class="pagination">
+    <button class="gallery-btn" id="prevPage">Previous</button>
+    <div style="display: flex; flex-direction: column">
+      <span id="pageInfo"></span>
+      <select id="pageSelect"></select>
+    </div>
+    <button class="gallery-btn" id="nextPage">Next</button>
+`;
+
+const galleryInsertWithSearchBar = /*html*/ `
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search..." />
+  </div>
+`;
+
+const galleryInsert = /*html*/ `
+  <div class="container">
+    ${showSearchBar ? galleryInsertWithSearchBar : ""}
+    <div class="gallery"></div>
+    ${showNavigationButtons ? galleryInsertWithNavigation : ""}
+  </div>
+`;
+
+let productInformation = /*html*/ `<div class="col-4">
+ <a href="{{LINK}}"> 
+  <img src="{{PHOTO_URL}}" alt="" />
+</a>
+  <div class="title-price flex">
+    <h3 class="title">{{TITLE}}</h3>
+    <p class="price">{{PRICE}}</p>
+  </div>
+  <div class="quick-description">{{DESCRIPTION}}</div>
+
+  <div class="border-top border-bottom align-self-end">
+    <div class="deliver-method flex">
+      <div id="method">{{DELIVERY_METHOD}}</div>
+      <div id="status">{{CURRENT_STATUS}}</div>
+    </div>
+  </div>
+
+  <div class="learn-more">
+    <a href="{{LINK}}" class="learn-more-link learn-more"
+      >Learn More <span class="chevron"> > </span></a
+    >
+  </div>
+</div>`;
+
+galleryLayout.innerHTML = galleryInsert;
+
+// ** Page Logic **
 function buildAndLoad() {
   const formName = "Website";
   console.log("DOM fully loaded and parsed");
@@ -61,8 +83,13 @@ function buildAndLoad() {
     if (!sheetData) return console.log("No data found");
 
     data = cleanSheetData(sheetData);
-    items = buildGalleryList(data);
-    renderGallery();
+
+    const filteredData = searchQuery
+      ? data.filter((item) => item.title.toLowerCase().includes(searchQuery))
+      : data;
+
+    items = buildGalleryList(filteredData);
+    renderGallery(items);
   };
   getSheetData({
     // sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
@@ -81,15 +108,19 @@ let items = [];
 function cleanSheetData(sheetData) {
   let cleanData = sheetData
     .filter((item) => item["Item Name"] !== "")
-    .map((item) => {
+    .map((item, index) => {
+      if (item["Photo"] === "") {
+        item["Photo"] =
+          index % 2 === 0 ? [IMAGE1_NOT_FOUND] : [IMAGE2_NOT_FOUND];
+      } else {
+        item["Photo"] = item["Photo"].split(",");
+      }
+
       return {
         title: item["Item Name"],
         description:
           item["Item Description"] !== "N/A" ? item["Item Description"] : "",
-        photo:
-          item["Photo"] !== ""
-            ? item["Photo"].split(",")
-            : ["https://via.placeholder.com/150"],
+        photo: item["Photo"],
         price: formatNumberToCurrency(item["Price"]),
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
@@ -174,7 +205,7 @@ function buildGalleryList(data) {
   return inventoryHTMLList;
 }
 
-function renderGallery() {
+function renderGallery(items) {
   const gallery = document.querySelector(".gallery");
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
@@ -185,6 +216,26 @@ function renderGallery() {
   if (showNavigationButtons) {
     updatePageControls();
   }
+
+  if (showSearchBar) {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchQuery = e.target.value.toLowerCase();
+        currentPage = 1;
+        filterAndLoad();
+      }, 300); // Delay of 300ms
+    });
+  }
+}
+
+function filterAndLoad() {
+  const filteredData = searchQuery
+    ? data.filter((item) => item.title.toLowerCase().includes(searchQuery))
+    : data;
+  let items = buildGalleryList(filteredData);
+  renderGallery(items);
 }
 
 function updatePageControls() {
@@ -214,7 +265,7 @@ if (showNavigationButtons) {
   document.getElementById("prevPage").addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
-      renderGallery();
+      renderGallery(items);
     }
   });
 
@@ -222,13 +273,13 @@ if (showNavigationButtons) {
     const totalPages = Math.ceil(items.length / itemsPerPage);
     if (currentPage < totalPages) {
       currentPage++;
-      renderGallery();
+      renderGallery(items);
     }
   });
 
   document.getElementById("pageSelect").addEventListener("change", (e) => {
     currentPage = parseInt(e.target.value, 10);
-    renderGallery();
+    renderGallery(items);
   });
 }
 // --==== QUERY EXAMPLES ====--

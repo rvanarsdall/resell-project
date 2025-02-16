@@ -63,7 +63,7 @@
   display: flex;
   flex-direction: column;
   align-content: center;
- 
+
   padding: 0 100px;
 }
 
@@ -78,8 +78,8 @@
 .price {
   font-size: 20px;
   font-weight: 400;
-  
-  color:black;
+
+  color: black;
   align-self: flex-end;
 }
 
@@ -127,7 +127,7 @@
   padding-top: 5px;
 }
 
-.icon-tag{
+.icon-tag {
   width: 16px;
   color: rgb(16, 22, 124);
 }
@@ -137,7 +137,7 @@
 }
 
 .align-self-end {
-  margin-top:auto;
+  margin-top: auto;
 }
 
 .justify-self-end {
@@ -205,5 +205,4 @@
     letter-spacing: -0.3;
     font-size: 14px;
   }
-
 }
