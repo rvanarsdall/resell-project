@@ -1,6 +1,6 @@
 console.log("individual-product/script.js");
-
-const individualProductInformation = html` <div class="container">
+https://form.frameworkscompany.com/forms/product-form-l8jgpz?239f4e56-d90c-49f1-93f9-d5433c1f73ab=$25.00&57b89eac-32ea-487e-b367-b3e466df124c=Delivery,+PickUp&2daf0f24-0eca-4cf4-bd47-f8d7cdcee5a6=Sold&d8b5959e-32bc-46b2-88d6-780f07eeec2c=blank&18e3ff94-0d43-4ba6-a54e-420ab070ea62=108
+const individualProductInformation = /*html*/ ` <div class="container">
   <div class="grid-layout">
     <div class="product-container">
       <div class="product-image">
@@ -29,7 +29,7 @@ const individualProductInformation = html` <div class="container">
         </div>
       </div>
       <div class="contact-us-link">
-        <a href="https://www.google.com" class="contact-us-link contact-us"
+        <a href="{{CONTACT_US_URL}}" class="contact-us-link contact-us"
           >Contact Us To Buy <span class="chevron"> > </span></a
         >
       </div>
@@ -38,7 +38,7 @@ const individualProductInformation = html` <div class="container">
   </div>
 </div>`;
 
-const productNotFound = html` <div class="container">
+const productNotFound = /*html*/ ` <div class="container">
   <div class="grid-layout">
     <div class="product-container">
       <div class="product-image">
@@ -188,6 +188,22 @@ function renderProduct(product) {
     "CURRENT_STATUS",
     product.currentStatus
   );
+  console.log("PRODUCT", product);
+  currentProductHTML = replaceProductInformation(
+    currentProductHTML,
+    "CONTACT_US_URL",
+    `https://form.frameworkscompany.com/forms/product-form-l8jgpz?18e3ff94-0d43-4ba6-a54e-420ab070ea62=${addingPlusSignsToSpaces(
+      product.id
+    )}&57b89eac-32ea-487e-b367-b3e466df124c=${addingPlusSignsToSpaces(
+      product.deliveryMethod
+    )}&239f4e56-d90c-49f1-93f9-d5433c1f73ab=${
+      product.price
+    }&2daf0f24-0eca-4cf4-bd47-f8d7cdcee5a6=${addingPlusSignsToSpaces(
+      product.currentStatus
+    )}&d8b5959e-32bc-46b2-88d6-780f07eeec2c=${addingPlusSignsToSpaces(
+      product.location
+    )}`
+  );
 
   productLayout.innerHTML = currentProductHTML;
 }
@@ -212,6 +228,7 @@ function individualCleanSheetData(sheetData) {
         price: formatNumberToCurrency(item["Price"]),
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
+        location: item["Location"],
       };
     })
     .reverse();
@@ -289,4 +306,8 @@ function popOverEffect() {
       popover.style.display = "none";
     });
   });
+}
+
+function addingPlusSignsToSpaces(input) {
+  return input ? input.toString().replace(/ /g, "+") : "blank";
 }
