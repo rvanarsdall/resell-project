@@ -1,5 +1,11 @@
 console.log("individual-product/script.js");
-https://form.frameworkscompany.com/forms/product-form-l8jgpz?239f4e56-d90c-49f1-93f9-d5433c1f73ab=$25.00&57b89eac-32ea-487e-b367-b3e466df124c=Delivery,+PickUp&2daf0f24-0eca-4cf4-bd47-f8d7cdcee5a6=Sold&d8b5959e-32bc-46b2-88d6-780f07eeec2c=blank&18e3ff94-0d43-4ba6-a54e-420ab070ea62=108
+
+const IMAGE1_NOT_FOUND =
+  "https://api.opnform.com/open/forms/11888/submissions/file/3_a838a25f-554f-4f2b-9c5e-452b3c0e5df5.png?signature=8f6c82ca05cf2fef1aa43fb284855b7b1a36caf7f88ac237d9e1fa4e86c477df";
+
+const IMAGE2_NOT_FOUND =
+  "https://api.opnform.com/open/forms/11888/submissions/file/2_d7d9b90c-97ad-4077-b205-759f0d3f9522.png?signature=a0a2af9c79c42defa7f09ba5fa8887f375ade70995e88988c38d825ddd50ac41";
+
 const individualProductInformation = /*html*/ ` <div class="container">
   <div class="grid-layout">
     <div class="product-container">
@@ -168,7 +174,7 @@ function renderProduct(product) {
   currentProductHTML = replaceProductInformation(
     currentProductHTML,
     "PHOTO_URL_2",
-    product.photo[1] ? product.photo[1] : product.photo[0]
+    product.photo[1] ? product.photo[1] : IMAGE2_NOT_FOUND
   );
 
   currentProductHTML = replaceProductInformation(
@@ -224,7 +230,7 @@ function individualCleanSheetData(sheetData) {
         photo:
           item["Photo"] !== ""
             ? item["Photo"].split(",")
-            : ["https://via.placeholder.com/150"],
+            : [IMAGE1_NOT_FOUND, IMAGE2_NOT_FOUND],
         price: formatNumberToCurrency(item["Price"]),
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
