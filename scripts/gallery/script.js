@@ -231,7 +231,7 @@ function renderGallery(items) {
 
 function filterAndLoad() {
   const filteredData = searchQuery
-    ? data.filter((item) => item.title.toLowerCase().includes(searchQuery))
+    ? data.filter((item) => item.title.toLowerCase().includes(searchQuery) || item.description.toLowerCase().includes(searchQuery))
     : data;
   currentPage = 1;
   let items = buildGalleryList(filteredData);
