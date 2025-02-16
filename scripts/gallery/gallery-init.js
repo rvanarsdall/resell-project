@@ -2,15 +2,17 @@
   const HOST_URL = "https://rvanarsdall.github.io/resell-project";
   // Dynamically load the required scripts
 
-    // Helper function to get data attributes from the script tag
-    const getScriptDataAttributes = () => {
-      const scriptTag = document.currentScript;
-      console.log("scriptTag: ", scriptTag.dataset);
-      return {
-        itemsPerPage: parseInt(scriptTag.dataset.itemsPerPage, 10) || 9, // Default to 9 items per page
-        showNavigationButtons: scriptTag.dataset.itemShowPageButtons === "true" ||false, // Default to true
-      };
+  // Helper function to get data attributes from the script tag
+  const getScriptDataAttributes = () => {
+    const scriptTag = document.currentScript;
+    console.log("scriptTag: ", scriptTag.dataset);
+    return {
+      itemsPerPage: parseInt(scriptTag.dataset.itemsPerPage, 10) || 9, // Default to 9 items per page
+      showNavigationButtons:
+        scriptTag.dataset.itemShowPageButtons === "true" || false, // Default to false
+      showSearchBar: scriptTag.dataset.itemShowSearch === "true" || false, // Default to false
     };
+  };
 
   const loadScript = (src, callback) => {
     const script = document.createElement("script");
@@ -56,11 +58,10 @@
     });
   }
 
-    // Get configuration from data attributes
-    const config = getScriptDataAttributes();
-    console.log("Gallery configuration:", config);
-  
-    // Make parameters globally accessible if needed
-    window.galleryConfig = config;
-  
+  // Get configuration from data attributes
+  const config = getScriptDataAttributes();
+  console.log("Gallery configuration:", config);
+
+  // Make parameters globally accessible if needed
+  window.galleryConfig = config;
 })();

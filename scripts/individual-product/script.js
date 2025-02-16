@@ -1,93 +1,84 @@
 console.log("individual-product/script.js");
 
-const individualProductInformation = ` <div class="container">
-      <div class="grid-layout">
-        <div class="product-container">
-          <div class="product-image">
-            <img
-              src="{{PHOTO_URL_1}}"
-              alt=""
-            />
-            <img
-              src="{{PHOTO_URL_2}}"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="description-container">
-          <div class="item-tag">Item Overview</div>
-
-          <div class="flex space-between">
-            <div class="title">{{TITLE}}</div>
-            <div class="individual-price">{{PRICE}}</div>
-          </div>
-
-          <div class="underline-container">
-            <hr class="underline" />
-          </div>
-          <div class="description">
-            <p>{{DESCRIPTION}}</p>
-            
-          </div>
-          <div class="border-top border-bottom align-self-end">
-            <div class="deliver-method flex mt-3 mb-3">
-              <div id="method">{{DELIVERY_METHOD}}</div>
-              <div id="status">{{CURRENT_STATUS}}</div>
-            </div>
-          </div>
-          <div class="contact-us-link">
-            <a
-              href="https://www.google.com"
-              class="contact-us-link contact-us"
-              >Contact Us To Buy <span class="chevron"> > </span></a
-            >
-          </div>
-        </div>
-        <hr />
+const individualProductInformation = html` <div class="container">
+  <div class="grid-layout">
+    <div class="product-container">
+      <div class="product-image">
+        <img src="{{PHOTO_URL_1}}" alt="" />
+        <img src="{{PHOTO_URL_2}}" alt="" />
       </div>
-    </div>`;
+    </div>
+    <div class="description-container">
+      <div class="item-tag">Item Overview</div>
 
-const productNotFound = ` <div class="container">
-      <div class="grid-layout">
-        <div class="product-container">
-          <div class="product-image">
-            <img src="{{PHOTO_URL_1}}" alt="" />
-            <img src="{{PHOTO_URL_2}}" alt="" />
-          </div>
-        </div>
-        <div class="description-container">
-          <div class="item-tag">Resell with Michelle</div>
-
-          <div class="flex space-between">
-            <div class="title">Product Not Found</div>
-            <div class="individual-price">OOPS!</div>
-          </div>
-
-          <div class="underline-container">
-            <hr class="underline" />
-          </div>
-          <div class="description">
-            <p>
-              The item that you were looking for was not found. Go back to our
-              gallery to view our entire collection that is for sale.
-            </p>
-
-            <p>If you have any questions please feel free to contact us.</p>
-          </div>
-          <div class="border-top border-bottom align-self-end">
-            <div class="mt-3 mb-3" style="text-align: center;">
-             <p>Product Not Found Message</p>
-            </div>
-          </div>
-          <div class="contact-us-link">
-            <a href="{{LINK_TO_GALLERY}}" class="gallery-link gallery"
-              >Back to Gallery <span class="chevron"> > </span></a
-            >
-          </div>
-        </div>
-        <hr />
+      <div class="flex space-between">
+        <div class="title">{{TITLE}}</div>
+        <div class="individual-price">{{PRICE}}</div>
       </div>
-    </div>`;
+
+      <div class="underline-container">
+        <hr class="underline" />
+      </div>
+      <div class="description">
+        <p>{{DESCRIPTION}}</p>
+      </div>
+      <div class="border-top border-bottom align-self-end">
+        <div class="deliver-method flex mt-3 mb-3">
+          <div id="method">{{DELIVERY_METHOD}}</div>
+          <div id="status">{{CURRENT_STATUS}}</div>
+        </div>
+      </div>
+      <div class="contact-us-link">
+        <a href="https://www.google.com" class="contact-us-link contact-us"
+          >Contact Us To Buy <span class="chevron"> > </span></a
+        >
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>`;
+
+const productNotFound = html` <div class="container">
+  <div class="grid-layout">
+    <div class="product-container">
+      <div class="product-image">
+        <img src="{{PHOTO_URL_1}}" alt="" />
+        <img src="{{PHOTO_URL_2}}" alt="" />
+      </div>
+    </div>
+    <div class="description-container">
+      <div class="item-tag">Resell with Michelle</div>
+
+      <div class="flex space-between">
+        <div class="title">Product Not Found</div>
+        <div class="individual-price">OOPS!</div>
+      </div>
+
+      <div class="underline-container">
+        <hr class="underline" />
+      </div>
+      <div class="description">
+        <p>
+          The item that you were looking for was not found. Go back to our
+          gallery to view our entire collection that is for sale.
+        </p>
+
+        <p>If you have any questions please feel free to contact us.</p>
+      </div>
+      <div class="border-top border-bottom align-self-end">
+        <div class="mt-3 mb-3" style="text-align: center;">
+          <p>Product Not Found Message</p>
+        </div>
+      </div>
+      <div class="contact-us-link">
+        <a href="{{LINK_TO_GALLERY}}" class="gallery-link gallery"
+          >Back to Gallery <span class="chevron"> > </span></a
+        >
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>`;
 
 //Path Variables from the URL
 const LINK_TO_GALLERY = "https://www.resellwithmichelle.org/en/marketplace";
