@@ -1,9 +1,9 @@
 console.log("individual-product/script.js");
 
-const IMAGE1_NOT_FOUND =
+const IMAGE1_NOT_FOUND_INDIVIDUAL =
   "https://api.opnform.com/open/forms/11888/submissions/file/3_a838a25f-554f-4f2b-9c5e-452b3c0e5df5.png?signature=8f6c82ca05cf2fef1aa43fb284855b7b1a36caf7f88ac237d9e1fa4e86c477df";
 
-const IMAGE2_NOT_FOUND =
+const IMAGE2_NOT_FOUND_INDIVIDUAL =
   "https://api.opnform.com/open/forms/11888/submissions/file/2_d7d9b90c-97ad-4077-b205-759f0d3f9522.png?signature=a0a2af9c79c42defa7f09ba5fa8887f375ade70995e88988c38d825ddd50ac41";
 
 const individualProductInformation = /*html*/ ` <div class="container">
@@ -97,7 +97,7 @@ const formName = "Website";
 // Product Layout Insert
 const productLayout = document.querySelector(".product-layout");
 
-function buildAndLoad() {
+function buildAndLoadIndividual() {
   console.log("DOM fully loaded and parsed");
   if (!productID) {
     return console.log("No product ID found");
@@ -115,9 +115,10 @@ function buildAndLoad() {
       renderNoProductFound();
       return console.log("No product found");
     }
-    renderProduct(productData);
+    renderProductIndividual(productData);
     popOverEffect();
   };
+
   individualGetSheetData({
     // sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
     sheetID: "1CZVsEbmZ3FaIMWkmp5H_RI7ynuN61FoGp9fSdiYyypo",
@@ -151,7 +152,7 @@ function renderNoProductFound() {
   productLayout.innerHTML = currentProductHTML;
 }
 
-function renderProduct(product) {
+function renderProductIndividual(product) {
   if (!product) return console.log("No product found");
   let currentProductHTML = individualProductInformation;
   currentProductHTML = replaceProductInformation(
@@ -174,7 +175,7 @@ function renderProduct(product) {
   currentProductHTML = replaceProductInformation(
     currentProductHTML,
     "PHOTO_URL_2",
-    product.photo[1] ? product.photo[1] : IMAGE2_NOT_FOUND
+    product.photo[1] ? product.photo[1] : IMAGE2_NOT_FOUND_INDIVIDUAL
   );
 
   currentProductHTML = replaceProductInformation(
@@ -214,7 +215,7 @@ function renderProduct(product) {
   productLayout.innerHTML = currentProductHTML;
 }
 
-buildAndLoad();
+buildAndLoadIndividual();
 
 function individualCleanSheetData(sheetData) {
   let cleanData = sheetData
@@ -230,7 +231,7 @@ function individualCleanSheetData(sheetData) {
         photo:
           item["Photo"] !== ""
             ? item["Photo"].split(",")
-            : [IMAGE1_NOT_FOUND, IMAGE2_NOT_FOUND],
+            : [IMAGE1_NOT_FOUND_INDIVIDUAL, IMAGE2_NOT_FOUND_INDIVIDUAL],
         price: formatNumberToCurrency(item["Price"]),
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
