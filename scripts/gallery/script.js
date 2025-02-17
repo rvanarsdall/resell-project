@@ -270,6 +270,7 @@ function renderGallery(items) {
         filterAndLoad();
       }, 300); // Delay of 300ms
     });
+    handleSearchEventListeners()
   }
 }
 
@@ -331,62 +332,36 @@ function updatePageControls(items) {
     }
     pageSelect.appendChild(option);
   }
+  addEventListenersToButtons()
 }
 
 // Event Listeners
-if (showNavigationButtons && !isSitemapPage) {
-  document.getElementById("prevPage").addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
+function addEventListenersToButtons(){
+  if (showNavigationButtons && !isSitemapPage) {
+    document.getElementById("prevPage").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderGallery(items);
+      }
+    });
+  
+    document.getElementById("nextPage").addEventListener("click", () => {
+      const totalPages = Math.ceil(items.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderGallery(items);
+      }
+    });
+  
+    document.getElementById("pageSelect").addEventListener("change", (e) => {
+      currentPage = parseInt(e.target.value, 10);
       renderGallery(items);
-    }
-  });
-
-  document.getElementById("nextPage").addEventListener("click", () => {
-    const totalPages = Math.ceil(items.length / itemsPerPage);
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderGallery(items);
-    }
-  });
-
-  document.getElementById("pageSelect").addEventListener("change", (e) => {
-    currentPage = parseInt(e.target.value, 10);
-    renderGallery(items);
-  });
-}
-// --==== QUERY EXAMPLES ====--
-// --==== USE LETTERS FOR COLUMN NAMES ====--
-//  'SELECT A,C,D WHERE D > 150'
-//  'SELECT * WHERE B = "Potato"'
-//  'SELECT * WHERE A contains "Jo"'
-//  'SELECT * WHERE C = "active" AND B contains "Jo"'
-//  "SELECT * WHERE E > date '2022-07-9' ORDER BY E DESC"
-
-// });
-
-function formatNumberToCurrency(number) {
-  // Convert String to Number and if it is a Nan return "N/A"
-  number = parseFloat(number);
-  if (isNaN(number)) {
-    return "N/A";
-  }
-
-  return number.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-}
-
-function translateDeliveryMethod(deliveryMethod) {
-  deliveryMethod = deliveryMethod.split(",");
-  if (deliveryMethod.length === 1) {
-    return deliveryMethod[0] + " Only";
-  } else {
-    return deliveryMethod[0] + " or " + deliveryMethod[1];
+    });
   }
 }
 
+function handleSearchEventListeners(){
+  
 if (!isSitemapPage && showSearchBar) {
   //**CSS Work */
   const filterItems = document.querySelectorAll(".filter-item");
@@ -444,4 +419,37 @@ if (!isSitemapPage && showSearchBar) {
   }
 
   window.addEventListener("resize", handleResize);
+}
+
+}
+// --==== QUERY EXAMPLES ====--
+// --==== USE LETTERS FOR COLUMN NAMES ====--
+//  'SELECT A,C,D WHERE D > 150'
+//  'SELECT * WHERE B = "Potato"'
+//  'SELECT * WHERE A contains "Jo"'
+//  'SELECT * WHERE C = "active" AND B contains "Jo"'
+//  "SELECT * WHERE E > date '2022-07-9' ORDER BY E DESC"
+
+// });
+
+function formatNumberToCurrency(number) {
+  // Convert String to Number and if it is a Nan return "N/A"
+  number = parseFloat(number);
+  if (isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+}
+
+function translateDeliveryMethod(deliveryMethod) {
+  deliveryMethod = deliveryMethod.split(",");
+  if (deliveryMethod.length === 1) {
+    return deliveryMethod[0] + " Only";
+  } else {
+    return deliveryMethod[0] + " or " + deliveryMethod[1];
+  }
 }
