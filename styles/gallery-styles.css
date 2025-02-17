@@ -251,3 +251,30 @@
     flex-direction: row;
   }
 }
+
+
+
+
+/* Sitemap Grid */
+
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+
+.sitemap-grid-item > a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.sitemap-grid-item > a:hover {
+  color: #10167c;
+  
+  text-decoration: underline;
+}
