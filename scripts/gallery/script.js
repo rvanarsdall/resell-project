@@ -29,6 +29,7 @@ const itemsPerPage = window.galleryConfig.itemsPerPage || 9; // Change this valu
 const showNavigationButtons =
   window.galleryConfig.showNavigationButtons || false;
 const showSearchBar = window.galleryConfig.showSearchBar || false;
+const isSitemapPage = window.galleryConfig.isSitemapPage || false;
 
 // ** DOM Elements **
 const galleryLayout = document.querySelector(".gallery-layout");
@@ -92,8 +93,6 @@ let productInformation = /*html*/ `<div class="col-4">
   </div>
 </div>`;
 
-galleryLayout.innerHTML = galleryInsert;
-
 // ** Page Logic **
 function buildAndLoad() {
   const formName = "Website";
@@ -107,8 +106,33 @@ function buildAndLoad() {
     filteredData = data;
 
     items = buildGalleryList(filteredData);
-    renderGallery(items);
+
+    if (isSitemapPage) {
+      siteMapBuilder(filteredData);
+    } else {
+      galleryLayout.innerHTML = galleryInsert;
+      renderGallery(items);
+    }
   };
+
+  function siteMapBuilder(filteredData) {
+    console.log(filteredData);
+    galleryLayout.classList.add("sitemap-grid");
+    let siteMapHTML = /*html*/ `
+  <div class="sitemap-grid-item">
+    <a href="{PRODUCT_URL}">{PRODUCT_NAME}</a>
+  </div>
+  `;
+
+    filteredData.forEach((item) => {
+      const itemHTML = siteMapHTML
+        .replace("{PRODUCT_URL}", item.link)
+        .replace("{PRODUCT_NAME}", item.title);
+
+      galleryLayout.insertAdjacentHTML("beforeend", itemHTML);
+    });
+  }
+
   getSheetData({
     // sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
     sheetID: "1CZVsEbmZ3FaIMWkmp5H_RI7ynuN61FoGp9fSdiYyypo",
@@ -265,7 +289,6 @@ function toggleFilter(element) {
 
   element.classList.toggle("active");
   const category = element.textContent;
-  debugger;
   filterByCategory(category);
 }
 
@@ -311,7 +334,7 @@ function updatePageControls(items) {
 }
 
 // Event Listeners
-if (showNavigationButtons) {
+if (showNavigationButtons && !isSitemapPage) {
   document.getElementById("prevPage").addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
@@ -364,59 +387,61 @@ function translateDeliveryMethod(deliveryMethod) {
   }
 }
 
-//**CSS Work */
-const filterItems = document.querySelectorAll(".filter-item");
-const searchBar = document.querySelector(".search-bar");
+if (!isSitemapPage && showSearchBar) {
+  //**CSS Work */
+  const filterItems = document.querySelectorAll(".filter-item");
+  const searchBar = document.querySelector(".search-bar");
 
-searchInput.addEventListener("focus", () => {
-  searchBar.classList.add("focused");
-  // Check window size because if it is too small the filter items will be hidden
-  if (window.innerWidth < 768) {
-    return;
-  }
-  filterItems.forEach((item) => {
-    item.classList.add("hidden");
-
-    // Optionally ensure display none after the transition
-    setTimeout(() => {
-      item.style.display = "none";
-    }, 500); // Matches CSS transition time
-  });
-});
-
-searchInput.addEventListener("blur", () => {
-  searchBar.classList.remove("focused");
-  // Check window size because if it is too small the filter items will be hidden
-  if (window.innerWidth < 768) {
-    return;
-  }
-
-  filterItems.forEach((item) => {
-    item.style.display = "block";
-
-    // Small delay before fade-in so display:block applies first
-    setTimeout(() => {
-      item.classList.remove("hidden");
-    }, 10);
-  });
-});
-
-// Window size gets smaller than 768px hide the filter items but if it gets bigger than 768px show the filter items
-
-function handleResize() {
-  if (window.innerWidth < 768) {
+  searchInput.addEventListener("focus", () => {
+    searchBar.classList.add("focused");
+    // Check window size because if it is too small the filter items will be hidden
+    if (window.innerWidth < 768) {
+      return;
+    }
     filterItems.forEach((item) => {
-      item.style.display = "none";
+      item.classList.add("hidden");
+
+      // Optionally ensure display none after the transition
+      setTimeout(() => {
+        item.style.display = "none";
+      }, 500); // Matches CSS transition time
     });
-  } else {
+  });
+
+  searchInput.addEventListener("blur", () => {
+    searchBar.classList.remove("focused");
+    // Check window size because if it is too small the filter items will be hidden
+    if (window.innerWidth < 768) {
+      return;
+    }
+
     filterItems.forEach((item) => {
       item.style.display = "block";
+
+      // Small delay before fade-in so display:block applies first
+      setTimeout(() => {
+        item.classList.remove("hidden");
+      }, 10);
     });
+  });
+
+  // Window size gets smaller than 768px hide the filter items but if it gets bigger than 768px show the filter items
+
+  function handleResize() {
+    if (window.innerWidth < 768) {
+      filterItems.forEach((item) => {
+        item.style.display = "none";
+      });
+    } else {
+      filterItems.forEach((item) => {
+        item.style.display = "block";
+      });
+    }
   }
-}
 
-if (window.innerWidth < 768) {
-  handleResize();
-}
+  if (window.innerWidth < 768) {
+    handleResize();
+  }
 
-window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", handleResize);
+}

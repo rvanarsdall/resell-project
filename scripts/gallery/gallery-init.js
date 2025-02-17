@@ -11,6 +11,7 @@
       showNavigationButtons:
         scriptTag.dataset.itemShowPageButtons === "true" || false, // Default to false
       showSearchBar: scriptTag.dataset.itemShowSearch === "true" || false, // Default to false
+      isSitemapPage: scriptTag.dataset.itemSitemapOnly === "true" || false, // Default to false
     };
   };
 
