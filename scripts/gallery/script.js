@@ -251,8 +251,7 @@ function renderGallery(items) {
 
 function toggleFilter(element) {
   // Clear other toggled filters
-  if(element.classList.contains("active")){
-    debugger
+  if (element.classList.contains("active")) {
     element.classList.remove("active");
     filterAndLoad();
     return;
@@ -266,7 +265,7 @@ function toggleFilter(element) {
 
   element.classList.toggle("active");
   const category = element.textContent;
-  debugger
+  debugger;
   filterByCategory(category);
 }
 

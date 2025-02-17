@@ -4,16 +4,12 @@
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
   border-top: 1.4px solid rgb(16, 22, 124, 0.5);
   border-bottom: 1.4px solid rgb(16, 22, 124, 0.5);
   width: 100%;
-  /* justify-content: space-evenly; */
-  text-align: left;
-  gap: 10%;
+  gap: 10px;
 }
 
 .search-bar input {
@@ -25,6 +21,7 @@
   flex: 1;
   color: black;
   text-align: center;
+  transition: background-color 0.3s ease-in-out;
 }
 /* Increase text size */
 .search-bar input:focus {
