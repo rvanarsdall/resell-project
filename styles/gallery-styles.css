@@ -60,7 +60,9 @@
 
 /* active underline for filter item */
 .filter-item.active {
-  border-bottom: 3px solid rgb(16, 22, 124, 0.5); /* Adding visible tick line */
+  text-decoration: underline;
+  text-decoration-color: #10167c;
+  text-decoration-thickness: 2px;
 }
 
 .filter-item:hover {

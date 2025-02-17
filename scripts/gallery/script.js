@@ -251,6 +251,12 @@ function renderGallery(items) {
 
 function toggleFilter(element) {
   // Clear other toggled filters
+  if(element.classList.contains("active")){
+    debugger
+    element.classList.remove("active");
+    filterAndLoad();
+    return;
+  }
   const filterItems = document.querySelectorAll(".filter-item");
   filterItems.forEach((item) => {
     if (item !== element) {
@@ -260,6 +266,7 @@ function toggleFilter(element) {
 
   element.classList.toggle("active");
   const category = element.textContent;
+  debugger
   filterByCategory(category);
 }
 
