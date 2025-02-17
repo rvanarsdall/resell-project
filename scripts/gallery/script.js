@@ -5,6 +5,16 @@ let searchQuery = "";
 let data = [];
 let filteredData = [];
 let searchTimeout;
+let filterCategories = [
+  "Electronic",
+  "Furniture",
+  "Books",
+  "Decor",
+  "Collectables",
+  "Kid Toys",
+  "Clothing (Male)",
+  "Clothing (Female)",
+];
 
 // ** Page Configuration **
 
@@ -37,7 +47,16 @@ const galleryInsertWithNavigation = /*html*/ `
 
 const galleryInsertWithSearchBar = /*html*/ `
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search..." />
+    <!-- Books, Decor, Collectables, Kid Toys -->
+    
+      ${filterCategories
+        .map(
+          (category) => /*html*/ `
+        <div class="filter-item" onclick="toggleFilter(this)">${category}</div>
+      `
+        )
+        .join("")}
+    <input type="text" id="searchInput" placeholder="Search" />
   </div>
 `;
 
@@ -124,6 +143,7 @@ function cleanSheetData(sheetData) {
         deliveryMethod: item["Purchase Type"],
         currentStatus: item["Status"],
         link: `${PRODUCT_URL}?id=${item["SKU"]}`,
+        category: item["Category"],
       };
     })
     .reverse();
@@ -229,9 +249,33 @@ function renderGallery(items) {
   }
 }
 
+function toggleFilter(element) {
+  // Clear other toggled filters
+  const filterItems = document.querySelectorAll(".filter-item");
+  filterItems.forEach((item) => {
+    if (item !== element) {
+      item.classList.remove("active");
+    }
+  });
+
+  element.classList.toggle("active");
+  const category = element.textContent;
+  filterByCategory(category);
+}
+
+function filterByCategory(category) {
+  const filteredData = data.filter((item) => item.category.includes(category));
+  currentPage = 1;
+  renderGallery(buildGalleryList(filteredData));
+}
+
 function filterAndLoad() {
   const filteredData = searchQuery
-    ? data.filter((item) => item.title.toLowerCase().includes(searchQuery) || item.description.toLowerCase().includes(searchQuery))
+    ? data.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchQuery) ||
+          item.description.toLowerCase().includes(searchQuery)
+      )
     : data;
   currentPage = 1;
   let items = buildGalleryList(filteredData);
@@ -313,3 +357,60 @@ function translateDeliveryMethod(deliveryMethod) {
     return deliveryMethod[0] + " or " + deliveryMethod[1];
   }
 }
+
+//**CSS Work */
+const filterItems = document.querySelectorAll(".filter-item");
+const searchBar = document.querySelector(".search-bar");
+
+searchInput.addEventListener("focus", () => {
+  searchBar.classList.add("focused");
+  // Check window size because if it is too small the filter items will be hidden
+  if (window.innerWidth < 768) {
+    return;
+  }
+  filterItems.forEach((item) => {
+    item.classList.add("hidden");
+
+    // Optionally ensure display none after the transition
+    setTimeout(() => {
+      item.style.display = "none";
+    }, 500); // Matches CSS transition time
+  });
+});
+
+searchInput.addEventListener("blur", () => {
+  searchBar.classList.remove("focused");
+  // Check window size because if it is too small the filter items will be hidden
+  if (window.innerWidth < 768) {
+    return;
+  }
+
+  filterItems.forEach((item) => {
+    item.style.display = "block";
+
+    // Small delay before fade-in so display:block applies first
+    setTimeout(() => {
+      item.classList.remove("hidden");
+    }, 10);
+  });
+});
+
+// Window size gets smaller than 768px hide the filter items but if it gets bigger than 768px show the filter items
+
+function handleResize() {
+  if (window.innerWidth < 768) {
+    filterItems.forEach((item) => {
+      item.style.display = "none";
+    });
+  } else {
+    filterItems.forEach((item) => {
+      item.style.display = "block";
+    });
+  }
+}
+
+if (window.innerWidth < 768) {
+  handleResize();
+}
+
+window.addEventListener("resize", handleResize);
