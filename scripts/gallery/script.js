@@ -111,6 +111,10 @@ function buildAndLoad() {
       siteMapBuilder(filteredData);
     } else {
       galleryLayout.innerHTML = galleryInsert;
+      if (showNavigationButtons) {
+        addEventListenersToButtons();
+      }
+
       renderGallery(items);
     }
   };
@@ -270,7 +274,7 @@ function renderGallery(items) {
         filterAndLoad();
       }, 300); // Delay of 300ms
     });
-    handleSearchEventListeners()
+    handleSearchEventListeners();
   }
 }
 
@@ -332,11 +336,10 @@ function updatePageControls(items) {
     }
     pageSelect.appendChild(option);
   }
-  addEventListenersToButtons()
 }
 
 // Event Listeners
-function addEventListenersToButtons(){
+function addEventListenersToButtons() {
   if (showNavigationButtons && !isSitemapPage) {
     document.getElementById("prevPage").addEventListener("click", () => {
       if (currentPage > 1) {
@@ -344,7 +347,7 @@ function addEventListenersToButtons(){
         renderGallery(items);
       }
     });
-  
+
     document.getElementById("nextPage").addEventListener("click", () => {
       const totalPages = Math.ceil(items.length / itemsPerPage);
       if (currentPage < totalPages) {
@@ -352,7 +355,7 @@ function addEventListenersToButtons(){
         renderGallery(items);
       }
     });
-  
+
     document.getElementById("pageSelect").addEventListener("change", (e) => {
       currentPage = parseInt(e.target.value, 10);
       renderGallery(items);
@@ -360,67 +363,65 @@ function addEventListenersToButtons(){
   }
 }
 
-function handleSearchEventListeners(){
-  
-if (!isSitemapPage && showSearchBar) {
-  //**CSS Work */
-  const filterItems = document.querySelectorAll(".filter-item");
-  const searchBar = document.querySelector(".search-bar");
+function handleSearchEventListeners() {
+  if (!isSitemapPage && showSearchBar) {
+    //**CSS Work */
+    const filterItems = document.querySelectorAll(".filter-item");
+    const searchBar = document.querySelector(".search-bar");
 
-  searchInput.addEventListener("focus", () => {
-    searchBar.classList.add("focused");
-    // Check window size because if it is too small the filter items will be hidden
-    if (window.innerWidth < 768) {
-      return;
-    }
-    filterItems.forEach((item) => {
-      item.classList.add("hidden");
-
-      // Optionally ensure display none after the transition
-      setTimeout(() => {
-        item.style.display = "none";
-      }, 500); // Matches CSS transition time
-    });
-  });
-
-  searchInput.addEventListener("blur", () => {
-    searchBar.classList.remove("focused");
-    // Check window size because if it is too small the filter items will be hidden
-    if (window.innerWidth < 768) {
-      return;
-    }
-
-    filterItems.forEach((item) => {
-      item.style.display = "block";
-
-      // Small delay before fade-in so display:block applies first
-      setTimeout(() => {
-        item.classList.remove("hidden");
-      }, 10);
-    });
-  });
-
-  // Window size gets smaller than 768px hide the filter items but if it gets bigger than 768px show the filter items
-
-  function handleResize() {
-    if (window.innerWidth < 768) {
+    searchInput.addEventListener("focus", () => {
+      searchBar.classList.add("focused");
+      // Check window size because if it is too small the filter items will be hidden
+      if (window.innerWidth < 768) {
+        return;
+      }
       filterItems.forEach((item) => {
-        item.style.display = "none";
+        item.classList.add("hidden");
+
+        // Optionally ensure display none after the transition
+        setTimeout(() => {
+          item.style.display = "none";
+        }, 500); // Matches CSS transition time
       });
-    } else {
+    });
+
+    searchInput.addEventListener("blur", () => {
+      searchBar.classList.remove("focused");
+      // Check window size because if it is too small the filter items will be hidden
+      if (window.innerWidth < 768) {
+        return;
+      }
+
       filterItems.forEach((item) => {
         item.style.display = "block";
+
+        // Small delay before fade-in so display:block applies first
+        setTimeout(() => {
+          item.classList.remove("hidden");
+        }, 10);
       });
+    });
+
+    // Window size gets smaller than 768px hide the filter items but if it gets bigger than 768px show the filter items
+
+    function handleResize() {
+      if (window.innerWidth < 768) {
+        filterItems.forEach((item) => {
+          item.style.display = "none";
+        });
+      } else {
+        filterItems.forEach((item) => {
+          item.style.display = "block";
+        });
+      }
     }
+
+    if (window.innerWidth < 768) {
+      handleResize();
+    }
+
+    window.addEventListener("resize", handleResize);
   }
-
-  if (window.innerWidth < 768) {
-    handleResize();
-  }
-
-  window.addEventListener("resize", handleResize);
-}
-
 }
 // --==== QUERY EXAMPLES ====--
 // --==== USE LETTERS FOR COLUMN NAMES ====--
